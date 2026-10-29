@@ -28,10 +28,32 @@ class Point:
         return self._y
 
     def __add__(self,other):
+        if isinstance(other,(int,float)):
+            return Point(self._x+other,self._y+other)
+        elif not isinstance(other,Point):
+            return NotImplemented
         return Point(self._x + other._x,self._y + other._y)
 
     def __sub__(self,other):
+        if isinstance(other,(int,float)):
+            return Point(self._x-other,self._y-other)
+        elif not isinstance(other,Point):
+            return NotImplemented
         return Point(self._x - other._x, self._y - other._y)
+
+    def __mul__(self, other):
+        if isinstance(other,(int,float)):
+            return Point(self._x * other, self._y * other)
+        elif not isinstance(other,Point):
+            return NotImplemented
+        return Point(self._x * other._x,self._y * other._y)
+
+    def __div__(self,other):
+        if isinstance(other,(int,float)):
+            return Point(self._x / other, self._y / other)
+        elif not isinstance(other,Point):
+            return NotImplemented
+        return Point(self._x / other._x,self._y / other._y)
 
 point1 = Point(x = 9.44,y = -10)
 print(f'Point1: {point1}')
