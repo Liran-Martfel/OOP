@@ -8,7 +8,7 @@
 
 #create point1 [x=9.44,y=-10]
 #print(point1.X)
-#print(point2.Y)
+#print(point2.Y),
 
 class Point:
     def __init__(self,x : float,y : float):
