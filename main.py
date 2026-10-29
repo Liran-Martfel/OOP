@@ -1,6 +1,4 @@
 #creating class, exersice within class 25/10/2026
-from unittest import result
-
 
 #class point
 #-x : float
@@ -63,4 +61,8 @@ p1 = Point(4.51,-0.3)
 p2 = Point (0.7,1)
 p3 = p1 + p2
 p4 = p1 - p2
+#p5 = p1 + 5 = Type_error
 print(f'Point 3: {p3}\nPoint 4: {p4}')
+# __radd__ (Right Addition) - A magic method for reflected addition.
+# Python automatically calls this when the object on the left side of the '+' operator
+# does not know how to add a Point (for example: 5 + p1).
