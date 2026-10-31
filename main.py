@@ -1,155 +1,36 @@
-#creating class, exersice within class 25/10/2026
+from contact import Contact
+from busniess_contact import BusinessContact
 
-#class point
-#-x : float
-#-y : float
-# + X: {read only}
-# + y: {read only}
+def main() -> None:
+    # Create a few regular contacts directly.
+    contact_1 = Contact("Alice", "050-1111111")
+    contact_2 = Contact("Bob", "050-2222222")
 
-#create point1 [x=9.44,y=-10]
-#print(point1.X)
-#print(point2.Y),
+    # Create contacts from string factory constructors.
+    contact_3 = Contact.from_string("Charlie:050-3333333")
 
-import math
-from functools import total_ordering
-@total_ordering
-class Point:
-    def __init__(self,x : float,y : float):
-        self._x=x
-        self._y=y
+    # ERROR
+    # contact_5 = BusinessContact.from_string("Charlie:050-3333333")
 
-    def __repr__(self):
-        return f'Point({self._x},{self._y})'
+    contact_4 = Contact.from_str("Dana:050-4444444")
 
-    @property
-    def X(self):
-        return self._x
-    @property
-    def Y(self):
-        return self._y
+    print("=== Contact examples ===")
+    print(contact_1.describe())
+    print(contact_2.describe())
+    print(contact_3)
+    print(contact_4)
 
-    def __add__(self,other):
-        if isinstance(other,(int,float)):
-            return Point(self._x+other,self._y+other)
-        elif not isinstance(other,Point):
-            return NotImplemented
-        return Point(self._x + other._x,self._y + other._y)
+    # Create business contacts and demonstrate business-specific behavior.
+    consultant_1 = BusinessContact("Eve", "050-5555555", "Acme", 250)
+    consultant_2 = BusinessContact("Frank", "050-6666666", "Globex", 320)
 
-    def __sub__(self,other):
-        if isinstance(other,(int,float)):
-            return Point(self._x-other,self._y-other)
-        elif not isinstance(other,Point):
-            return NotImplemented
-        return Point(self._x - other._x, self._y - other._y)
+    print("\n=== Business contact examples ===")
+    print(consultant_1.describe())
+    print(consultant_2.describe())
+    print(f"{consultant_1.name} cost for 3.5 hours: {consultant_1.cost(3.5)}")
+    print(f"{consultant_2.name} cost for 2 hours: {consultant_2.cost(2)}")
+    print(consultant_1)
+    print(consultant_2)
 
-    def __mul__(self, other):
-        if isinstance(other,(int,float)):
-            return Point(self._x * other, self._y * other)
-        elif not isinstance(other,Point):
-            return NotImplemented
-        return Point(self._x * other._x,self._y * other._y)
-
-    def __div__(self,other):
-        if isinstance(other,(int,float)):
-            return Point(self._x / other, self._y / other)
-        elif not isinstance(other,Point):
-            return NotImplemented
-        return Point(self._x / other._x,self._y / other._y)
-
-    def __eq__(self,other):
-        if not isinstance(other,Point):
-            return NotImplemented
-        return Point._distance_from_origin(self) == Point._distance_from_origin(other)
-
-    def __neq__(self,other):
-        return not self.__eq__(other)
-
-    @staticmethod
-    def _distance_from_origin(Point):
-        return math.sqrt(Point._x ** 2 + Point._y ** 2)
-
-    def __lt__(self,other): #lt is less than
-        if not isinstance(other,Point):
-            return NotImplemented
-        return Point._distance_from_origin(self) < Point._distance_from_origin(other)
-
-    def __gt__(self,other): #lt is less than
-        return not self.__lt__(other)
-
-    def __len__(self):
-        return int(Point._distance_from_origin(self))
-
-    def __str__(self):
-        return f'Point({self._x},{self._y})'
-
-    def __repr__(self):
-        pass
-
-
-point1 = Point(9.44,-10)
-print(f'Point1: {point1}')
-print('X:',point1.X)
-print('Y:',point1.Y)
-p1 = Point(4.51,-0.3)
-p2 = Point (0.7,1)
-p3 = Point(0.7,1)
-p4 = Point (3,4)
-p5 = Point(2.5,3.5)
-#p5 = p1 + 5 = Type_error
-print(f'Point 3: {p3}\nPoint 4: {p4}')
-print(len(p4))
-print(p4)
-# __radd__ (Right Addition) - A magic method for reflected addition.
-# Python automatically calls this when the object on the left side of the '+' operator
-# does not know how to add a Point (for example: 5 + p1).
-
-class Contact:
-
-    def __init__(self, name, number):
-        self._name = name
-        self._number = number
-
-    # 1. Getter עבור name (חייב להופיע ראשון)
-    @property
-    def name(self):
-        return "**" + self._name + "**"
-
-    # 2. Setter עבור name
-    @name.setter
-    def name(self, value):
-        value = value.strip()
-        if value:
-          self._name = value
-        else:
-          raise ValueError("Name cannot be empty")
-
-    # 3. Getter עבור number
-    @property
-    def number(self):
-        return self._number
-
-    # 4. Setter עבור number
-    @number.setter
-    def number(self, value):
-        value = value.strip()
-        if value:
-          self._number = value
-        else:
-          raise ValueError("Number cannot be empty")
-
-    @staticmethod
-    def from_string(txt):
-        name,number = txt.strip().split(':')
-        return Contact(name,number)
-
-    @classmethod
-    def from_str(cls,txt):
-        name,number = txt.strip().split(':')
-        return cls(name,number)
-
-    def __str__(self):
-        return f'Contact({self._number})'
-
-danny = Contact("Danny", "050-2372361")
-danny.number = "050-2372361"
-print(danny.name)
+if __name__ == "__main__":
+    main()
