@@ -86,7 +86,7 @@ class Point:
         pass
 
 
-point1 = Point(x = 9.44,y = -10)
+point1 = Point(9.44,-10)
 print(f'Point1: {point1}')
 print('X:',point1.X)
 print('Y:',point1.Y)
@@ -102,3 +102,54 @@ print(p4)
 # __radd__ (Right Addition) - A magic method for reflected addition.
 # Python automatically calls this when the object on the left side of the '+' operator
 # does not know how to add a Point (for example: 5 + p1).
+
+class Contact:
+
+    def __init__(self, name, number):
+        self._name = name
+        self._number = number
+
+    # 1. Getter עבור name (חייב להופיע ראשון)
+    @property
+    def name(self):
+        return "**" + self._name + "**"
+
+    # 2. Setter עבור name
+    @name.setter
+    def name(self, value):
+        value = value.strip()
+        if value:
+          self._name = value
+        else:
+          raise ValueError("Name cannot be empty")
+
+    # 3. Getter עבור number
+    @property
+    def number(self):
+        return self._number
+
+    # 4. Setter עבור number
+    @number.setter
+    def number(self, value):
+        value = value.strip()
+        if value:
+          self._number = value
+        else:
+          raise ValueError("Number cannot be empty")
+
+    @staticmethod
+    def from_string(txt):
+        name,number = txt.strip().split(':')
+        return Contact(name,number)
+
+    @classmethod
+    def from_str(cls,txt):
+        name,number = txt.strip().split(':')
+        return cls(name,number)
+
+    def __str__(self):
+        return f'Contact({self._number})'
+
+danny = Contact("Danny", "050-2372361")
+danny.number = "050-2372361"
+print(danny.name)
